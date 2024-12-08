@@ -1,3 +1,6 @@
+from datetime import datetime
+from puzzle import puzzleFrame,  puzzleHint, puzzleAnswer
+
 def Home():
     print("---------------------------------------------")
     print("1. Log in")
@@ -22,10 +25,10 @@ def Login(user_data_file):
             for user in users:
                 stored_email, stored_password = user.strip().split(",")[1:]
                 if stored_email == email and stored_password == password:
-                    return True
+                    return True, stored_email
             print("Invalid username or password!")
     except FileNotFoundError:
-        print("An error occurred while trying to log in. Please try again.")
+        print("An error occurred while trying to open the file. Please try again.")
 
 def Registration(user_data_file):
     name = input("Enter your name: ")
@@ -49,14 +52,17 @@ def Registration(user_data_file):
                         print("User already exists! Please log in.")
                         return False
         except FileNotFoundError:
-            print("An error occurred while trying to log in. Please try again.")
+            print("An error occurred while trying to open the file. Please try again.")
         
-        with open(user_data_file, "a") as file:
-            file.write(f"{name},{email},{password}\n")
-            return True 
+        try:
+            with open(user_data_file, "a") as file:
+                file.write(f"{name},{email},{password}\n")
+                return True 
+        except FileNotFoundError:
+            print("An error occurred while trying to open the file. Please try again.")
     
     
-#Main function:
+
 user_data_file = "user_data.txt"
 choice_1 = True
 print("Welcome to Crossword Game!!")
@@ -65,7 +71,8 @@ while(choice_1):
     first = input("Choose an option: ")
 
     if first == "1":
-        if Login(user_data_file):
+        valid_user, email = Login(user_data_file)
+        if valid_user:
             print("Login successful!")
             choice_2 = True
             while(choice_2):
@@ -73,7 +80,30 @@ while(choice_1):
                 second = input("Choose an option: ")
                 
                 if second == "1":
-                    print("Game is under development")
+                    i = 0
+                    score = 0
+                    while i < len(puzzleAnswer):
+                        print(puzzleFrame[i])
+                        print("Hint: ", end="")
+                        print(puzzleHint[i])
+                        print("0. Exit")
+                        user_input = input("Enter your answer: ")
+                        if user_input == "0":
+                            print("Exiting the game. Goodbye!")
+                            break
+                        elif user_input == puzzleAnswer[i]:
+                            print("Correct!")
+                            score += 10
+                            i += 1
+                        else:
+                            print("Incorrect!")
+                            score -= 5
+                            i = i
+                    try:
+                        with open("score.txt", "a") as file:
+                            file.write(f"{email},{score},{datetime.now()}\n")
+                    except FileNotFoundError:
+                        print("An error occurred while trying to open the file. Please try again.")
                 elif second == "2":
                     print("Score is under development")
                 elif second == "3":
