@@ -972,58 +972,60 @@ def RemoveUser():
     except FileNotFoundError:
         print("An error occurred while trying to open the file. Please try again.")
 
+def Main():
+    print("-----------------Welcome to Crossword Game!!-----------------")
+    choice_1 = True
+    while(choice_1):
+        Home()
+        first = input("Choose an option: ")
 
-print("-----------------Welcome to Crossword Game!!-----------------")
-choice_1 = True
-while(choice_1):
-    Home()
-    first = input("Choose an option: ")
-
-    if first == "1":
-        validUser, name, email, role = Login(userDataFile)
-        if validUser and role == "user":
-            print(f"Login successful!, welcome back '{name}'")
-            choice_2 = True
-            while(choice_2):
-                DashboardUser()
-                second = input("Choose an option: ")
-                
-                if second == "1":
-                    PlayGame(email)
-                elif second == "2":
-                    IndividualUserScore(email)
-                elif second == "3":
-                    ChangePassword(email)    
-                elif second == "4":
-                    print("Logged out successfully!")
-                    choice_2 = False
-                else:
-                    print("Invalid Input")
-        elif validUser and role == "admin":
-            print(f"Admin login successful!, welcome back '{name}'")
-            choice_3 = True
-            while(choice_3):
-                DashboardAdmin()
-                third = input("Choose an option: ")
-                if third == "1":
-                    AllUser() 
-                elif third == "2":
-                    AllUserScores()
-                elif third == "3":
-                    RemoveUser()
-                elif third == "4":
-                    print("Logged out successfully!")
-                    choice_3 = False
-                else:
-                    print("Invalid Input")
+        if first == "1":
+            validUser, name, email, role = Login(userDataFile)
+            if validUser and role == "user":
+                print(f"Login successful!, welcome back '{name}'")
+                choice_2 = True
+                while(choice_2):
+                    DashboardUser()
+                    second = input("Choose an option: ")
                     
+                    if second == "1":
+                        PlayGame(email)
+                    elif second == "2":
+                        IndividualUserScore(email)
+                    elif second == "3":
+                        ChangePassword(email)    
+                    elif second == "4":
+                        print("Logged out successfully!")
+                        choice_2 = False
+                    else:
+                        print("Invalid Input")
+            elif validUser and role == "admin":
+                print(f"Admin login successful!, welcome back '{name}'")
+                choice_3 = True
+                while(choice_3):
+                    DashboardAdmin()
+                    third = input("Choose an option: ")
+                    if third == "1":
+                        AllUser() 
+                    elif third == "2":
+                        AllUserScores()
+                    elif third == "3":
+                        RemoveUser()
+                    elif third == "4":
+                        print("Logged out successfully!")
+                        choice_3 = False
+                    else:
+                        print("Invalid Input")
+                        
+            else:
+                print("Invalid user! Please try again.")         
+        elif first == "2":
+            if Registration(userDataFile):
+                print("Registration successful! You can now log in.")
+        elif first == "3":
+            print("Exiting the game. Goodbye!")
+            choice_1 = False
         else:
-            print("Invalid user! Please try again.")         
-    elif first == "2":
-        if Registration(userDataFile):
-            print("Registration successful! You can now log in.")
-    elif first == "3":
-        print("Exiting the game. Goodbye!")
-        choice_1 = False
-    else:
-        print("Invalid Input")
+            print("Invalid Input")
+
+Main()
