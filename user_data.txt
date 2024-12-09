@@ -1,2 +1,4 @@
 Admin,admin@gmail.com,123,admin
-Sabit,sabithasan940@gmail.com,1234,user
+Sabit,sabithasan940@gmail.com,123,user
+1,1,1,user
+a,a,a,user

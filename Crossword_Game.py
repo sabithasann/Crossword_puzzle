@@ -854,11 +854,16 @@ def ChangePassword(email):
         with open(userDataFile, "w") as file:
             for user in users:
                 storedName, storedEmail, storedPassword, storedRole = user.strip().split(",")
+                if storedEmail == email and storedPassword != password:
+                    print("Incorrect password! Please try again.")
+                    file.write(user)
+                    continue
                 if storedEmail == email and storedPassword == password:
                     file.write(f"{storedName},{storedEmail},{newPassword},{storedRole}\n")
+                    print("Password changed successfully!")
+                    continue
                 else:
                     file.write(user)
-        print("Password changed successfully!")
     except FileNotFoundError:
         print("An error occurred while trying to open the file. Please try again.")
 
@@ -881,9 +886,9 @@ def Login(user_data_file):
                 storedName, storedEmail, storedPassword, role = user.strip().split(",")
                 if storedEmail == email and storedPassword == password:
                     return True, storedName, storedEmail, role
-            print("Invalid username or password!")
     except FileNotFoundError:
         print("An error occurred while trying to open the file. Please try again.")
+    return False, "", "", ""
 
 def Registration(user_data_file):
     name = input("Enter your name: ")
@@ -902,7 +907,7 @@ def Registration(user_data_file):
             with open(user_data_file, "r") as file:
                 users = file.readlines()
                 for user in users:
-                    storedEmail, storedPassword = user.strip().split(",")[1:]
+                    storedName, storedEmail, storedPassword, storedRole = user.strip().split(",")
                     if storedEmail == email and storedPassword == password:
                         print("User already exists! Please log in.")
                         return False
