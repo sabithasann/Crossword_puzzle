@@ -824,6 +824,7 @@ def PlayGame(email):
         userInput = input("Enter your answer: ")
         if userInput == "0":
             print("Exiting the game. Goodbye!")
+            print(f"Your score is {score}")
             break
         elif userInput == pickedPuzzle[2][i]:
             print("Correct!")
@@ -1028,7 +1029,7 @@ def Main():
             if Registration(userDataFile):
                 print("Registration successful! You can now log in.")
         elif first == "3":
-            print("Exiting the game. Goodbye!")
+            print("Exiting the application. Goodbye!")
             choice_1 = False
         else:
             print("Invalid Input")
