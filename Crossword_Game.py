@@ -973,9 +973,8 @@ def RemoveUser():
         print("An error occurred while trying to open the file. Please try again.")
 
 
-
+print("-----------------Welcome to Crossword Game!!-----------------")
 choice_1 = True
-print("Welcome to Crossword Game!!")
 while(choice_1):
     Home()
     first = input("Choose an option: ")
