@@ -909,7 +909,7 @@ def Registration(user_data_file):
                 users = file.readlines()
                 for user in users:
                     storedName, storedEmail, storedPassword, storedRole = user.strip().split(",")
-                    if storedEmail == email and storedPassword == password:
+                    if storedEmail == email:
                         print("User already exists! Please log in.")
                         return False
         except FileNotFoundError:
